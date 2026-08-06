@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, ShieldCheck, CheckCircle2, User, Mail, DollarSign, Send } from 'lucide-react';
+import { X, Heart, ShieldCheck, CheckCircle2, User, Mail, DollarSign, Send, Info } from 'lucide-react';
 import { ORG_INFO } from '../data/plantData';
 import { translations } from '../data/translations';
 
@@ -12,7 +12,6 @@ export default function VolunteerDonateModal({ lang, isOpen, mode, onClose }) {
 
   const [volunteerInfo, setVolunteerInfo] = useState({ name: '', email: '', region: 'Yellowknife, NT', area: 'Field Observation' });
   const [volunteered, setVolunteered] = useState(false);
-  const [emailLink, setEmailLink] = useState('');
 
   const t = translations[lang];
 
@@ -20,35 +19,12 @@ export default function VolunteerDonateModal({ lang, isOpen, mode, onClose }) {
 
   const handleDonate = (e) => {
     e.preventDefault();
-    const amount = customAmount || selectedAmount;
-    const subject = encodeURIComponent(`[Tax-Deductible Donation Request] $${amount} CAD from ${donorInfo.name}`);
-    const body = encodeURIComponent(
-      `Organization for the recording, observation, and conservation of trees and other plants\n` +
-      `Donor: ${donorInfo.name}\nEmail: ${donorInfo.email}\nDonation Amount: $${amount} CAD\n` +
-      `Request Tax Receipt under Canadian CRA Charity #${ORG_INFO.charityId}\n` +
-      `Headquarters: Northwest Territories (NT), Canada`
-    );
-    const link = `mailto:${ORG_INFO.contactEmail}?subject=${subject}&body=${body}`;
-    setEmailLink(link);
     setDonated(true);
-    // Also trigger mailto directly
-    window.location.href = link;
   };
 
   const handleVolunteer = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`[Volunteer Application] ${volunteerInfo.name} - ${volunteerInfo.area}`);
-    const body = encodeURIComponent(
-      `Organization for the recording, observation, and conservation of trees and other plants\n` +
-      `Applicant Name: ${volunteerInfo.name}\nEmail: ${volunteerInfo.email}\n` +
-      `Region: ${volunteerInfo.region}\nSelected Area: ${volunteerInfo.area}\n` +
-      `Headquarters: Northwest Territories (NT), Canada`
-    );
-    const link = `mailto:${ORG_INFO.contactEmail}?subject=${subject}&body=${body}`;
-    setEmailLink(link);
     setVolunteered(true);
-    // Also trigger mailto directly
-    window.location.href = link;
   };
 
   return (
@@ -66,7 +42,7 @@ export default function VolunteerDonateModal({ lang, isOpen, mode, onClose }) {
         {/* Modal Tabs Header */}
         <div className="flex border-b border-emerald-800/50 bg-[#03150d]/80 pt-4 px-6 gap-4">
           <button
-            onClick={() => setActiveTab('donate')}
+            onClick={() => { setActiveTab('donate'); setDonated(false); setVolunteered(false); }}
             className={`pb-3 font-bold text-sm transition-all border-b-2 flex items-center gap-2 ${
               activeTab === 'donate'
                 ? 'border-emerald-400 text-emerald-300'
@@ -77,7 +53,7 @@ export default function VolunteerDonateModal({ lang, isOpen, mode, onClose }) {
           </button>
 
           <button
-            onClick={() => setActiveTab('volunteer')}
+            onClick={() => { setActiveTab('volunteer'); setDonated(false); setVolunteered(false); }}
             className={`pb-3 font-bold text-sm transition-all border-b-2 flex items-center gap-2 ${
               activeTab === 'volunteer'
                 ? 'border-emerald-400 text-emerald-300'
@@ -94,20 +70,41 @@ export default function VolunteerDonateModal({ lang, isOpen, mode, onClose }) {
           {activeTab === 'donate' ? (
             <div>
               {donated ? (
-                <div className="text-center py-10 space-y-4">
+                <div className="text-center py-8 space-y-4 animate-fadeIn">
                   <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/50">
-                    <CheckCircle2 className="w-10 h-10" />
+                    <Info className="w-9 h-9" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-100">Donation Request Initiated!</h3>
-                  <p className="text-xs text-slate-300 max-w-sm mx-auto">
-                    Your details have been pre-filled to contact <strong className="text-emerald-300">{ORG_INFO.contactEmail}</strong>. Tax-deductible receipts will be issued under CRA Charity <strong>#{ORG_INFO.charityId}</strong>.
-                  </p>
-                  <a
-                    href={emailLink}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-400 text-[#03150d] font-bold text-xs hover:bg-emerald-300 transition-colors"
-                  >
-                    <Mail className="w-4 h-4" /> Open Email Client ({ORG_INFO.contactEmail})
-                  </a>
+                  
+                  <h3 className="text-2xl font-bold text-slate-100">
+                    {lang === 'fr' ? 'Information de don' : 'Donation Information'}
+                  </h3>
+
+                  <div className="p-5 rounded-2xl bg-[#03150d] border border-emerald-800/80 text-sm text-slate-200 space-y-3 max-w-md mx-auto">
+                    <p className="font-semibold text-emerald-300">
+                      {lang === 'fr' 
+                        ? 'Pour toute demande détaillée concernant les dons ou les reçus fiscaux, veuillez contacter :'
+                        : 'For detailed inquiries regarding donations or official tax receipts, please contact:'}
+                    </p>
+
+                    <div className="p-3 rounded-xl bg-emerald-950 border border-emerald-700/60 font-mono text-emerald-300 text-base font-bold select-all">
+                      protectlead@npu.codes
+                    </div>
+
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {lang === 'fr'
+                        ? 'Organisme de bienfaisance enregistré au Canada • ARC NE n° 107233456RR0001 (Territoires du Nord, Canada)'
+                        : 'Canadian Registered Charity • CRA BN #107233456RR0001 (Northwest Territories, Canada)'}
+                    </p>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={onClose}
+                      className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#03150d] bg-emerald-400 hover:bg-emerald-300 transition-colors"
+                    >
+                      {lang === 'fr' ? 'Fermer' : 'Close'}
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleDonate} className="space-y-5">
@@ -186,20 +183,41 @@ export default function VolunteerDonateModal({ lang, isOpen, mode, onClose }) {
           ) : (
             <div>
               {volunteered ? (
-                <div className="text-center py-10 space-y-4">
+                <div className="text-center py-8 space-y-4 animate-fadeIn">
                   <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/50">
-                    <CheckCircle2 className="w-10 h-10" />
+                    <Info className="w-9 h-9" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-100">Volunteer Application Ready!</h3>
-                  <p className="text-xs text-slate-300 max-w-sm mx-auto">
-                    Your application email has been addressed directly to <strong className="text-emerald-300">{ORG_INFO.contactEmail}</strong>.
-                  </p>
-                  <a
-                    href={emailLink}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-400 text-[#03150d] font-bold text-xs hover:bg-emerald-300 transition-colors"
-                  >
-                    <Mail className="w-4 h-4" /> Open Email Client ({ORG_INFO.contactEmail})
-                  </a>
+
+                  <h3 className="text-2xl font-bold text-slate-100">
+                    {lang === 'fr' ? 'Information bénévolat' : 'Volunteer Information'}
+                  </h3>
+
+                  <div className="p-5 rounded-2xl bg-[#03150d] border border-emerald-800/80 text-sm text-slate-200 space-y-3 max-w-md mx-auto">
+                    <p className="font-semibold text-emerald-300">
+                      {lang === 'fr'
+                        ? 'Pour toute demande détaillée concernant le bénévolat et le recrutement, veuillez contacter :'
+                        : 'For detailed inquiries regarding volunteer onboarding and recruitment, please contact:'}
+                    </p>
+
+                    <div className="p-3 rounded-xl bg-emerald-950 border border-emerald-700/60 font-mono text-emerald-300 text-base font-bold select-all">
+                      protectlead@npu.codes
+                    </div>
+
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {lang === 'fr'
+                        ? 'Organization for the recording, observation, and conservation of trees and other plants (Territoires du Nord, Canada)'
+                        : 'Organization for the recording, observation, and conservation of trees and other plants (Northwest Territories, Canada)'}
+                    </p>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={onClose}
+                      className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#03150d] bg-emerald-400 hover:bg-emerald-300 transition-colors"
+                    >
+                      {lang === 'fr' ? 'Fermer' : 'Close'}
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleVolunteer} className="space-y-4">

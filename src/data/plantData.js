@@ -69,7 +69,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 89,
     phenology: "Amber Berry Ripening State",
     notes: "Extensive peat bog patch covering 120 sq. meters. Golden-amber aggregate berries forming healthily above Sphagnum moss layer.",
-    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1628151016026-5d470bfb6805?auto=format&fit=crop&w=800&q=80",
     tags: ["Sphagnum Bog", "Subarctic Edible", "Peatland Flora"]
   },
   {
@@ -98,12 +98,12 @@ export const SAMPLE_OBSERVATIONS = [
     status: "Stable",
     location: "Fort Smith Boreal Reserve, Northwest Territories",
     coordinates: "60.0055° N, 111.8872° W",
-    observedDate: "2026-07-14",
     observer: "Conservation Team North",
+    observedDate: "2026-07-14",
     healthIndex: 95,
     phenology: "Green Fruit Setting",
     notes: "Evergreen dwarf shrub carpet beneath Jack Pine & Spruce canopy. Thick leathery leaves showing vibrant chlorophyll levels.",
-    image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
     tags: ["Evergreen Shrub", "Boreal Floor", "Edible Berry"]
   },
   {
@@ -129,7 +129,7 @@ export const CONSERVATION_PROJECTS = [
   {
     id: "PROJ-NT-01",
     title: "Nahanni & Slave River Old-Growth Spruce Phenology Sentinel",
-    titleFr: "Sentinelle phénologique des épinettes anciennes du Nahanni",
+    titleFr: "Sentinelle phénologique des épinettes anciennes du Nahanni et de la rivière des Esclaves",
     location: "Nahanni & Slave River Basins, NT",
     focus: "Longitudinal observation of subarctic tree growth response to seasonal temperature variations.",
     focusFr: "Observation longitudinale de la croissance des arbres subarctiques en réponse aux variations de température.",

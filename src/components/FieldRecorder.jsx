@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, MapPin, UploadCloud, CheckCircle2, Leaf, Sparkles, Send, Mail, RefreshCw, Info } from 'lucide-react';
+import { Camera, MapPin, UploadCloud, CheckCircle2, Leaf, Sparkles, Send, Info } from 'lucide-react';
 import { ORG_INFO } from '../data/plantData';
 import { translations } from '../data/translations';
 
@@ -20,7 +20,6 @@ export default function FieldRecorder({ lang, onAddObservation }) {
 
   const [previewImage, setPreviewImage] = useState('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');
   const [submitted, setSubmitted] = useState(false);
-  const [dispatchEmailUrl, setDispatchEmailUrl] = useState('');
 
   const nwtPresets = [
     {
@@ -33,7 +32,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       name: 'Cloudberry (Plaquebière)',
       latin: 'Rubus chamaemorus',
       cat: 'Wildflowers & Bogs',
-      img: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80'
+      img: 'https://images.unsplash.com/photo-1628151016026-5d470bfb6805?auto=format&fit=crop&w=800&q=80'
     },
     {
       name: 'Dwarf Birch (Bouleau nain)',
@@ -45,11 +44,10 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       name: 'Mountain Cranberry (Airelle)',
       latin: 'Vaccinium vitis-idaea',
       cat: 'Shrubs & Berries',
-      img: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80'
+      img: 'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80'
     }
   ];
 
-  // Handle local user photo upload file FileReader
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -61,7 +59,6 @@ export default function FieldRecorder({ lang, onAddObservation }) {
     }
   };
 
-  // Auto fill real NWT coordinates
   const handleAutoGPS = () => {
     const nwtCoords = [
       { loc: "Yellowknife Peatlands, NT", coord: "62.4540° N, 114.3718° W" },
@@ -101,25 +98,6 @@ export default function FieldRecorder({ lang, onAddObservation }) {
     };
 
     onAddObservation(newObs);
-
-    // Pre-format mailto link to protectlead@npu.codes
-    const emailSubject = encodeURIComponent(`[Plant Observation Submission] ${formData.commonName} (${obsId})`);
-    const emailBody = encodeURIComponent(
-      `Organization for the recording, observation, and conservation of trees and other plants\n` +
-      `Official Log Submission to protectlead@npu.codes\n\n` +
-      `Observation ID: ${obsId}\n` +
-      `Species: ${formData.commonName} (${formData.scientificName})\n` +
-      `Category: ${formData.category}\n` +
-      `Location: ${formData.location} (${formData.coordinates})\n` +
-      `Observer: ${formData.observer}\n` +
-      `Health Rating: ${formData.healthIndex}%\n` +
-      `Phenology: ${formData.phenology}\n` +
-      `Notes: ${formData.notes}\n\n` +
-      `Headquarters: Northwest Territories (NT), Canada`
-    );
-
-    const mailto = `mailto:${ORG_INFO.contactEmail}?subject=${emailSubject}&body=${emailBody}`;
-    setDispatchEmailUrl(mailto);
     setSubmitted(true);
   };
 
@@ -150,28 +128,28 @@ export default function FieldRecorder({ lang, onAddObservation }) {
                 <CheckCircle2 className="w-10 h-10" />
               </div>
               
-              <h3 className="text-2xl font-bold text-slate-100">{t.submitSuccessTitle}</h3>
-              <p className="text-sm text-emerald-300 max-w-lg mx-auto">
-                {t.submitSuccessDesc}
-              </p>
+              <h3 className="text-2xl font-bold text-slate-100">
+                {lang === 'fr' ? 'Observation enregistrée !' : 'Observation Recorded!'}
+              </h3>
+              
+              <div className="p-5 rounded-2xl bg-[#03150d] border border-emerald-800/80 text-sm text-slate-200 space-y-3 max-w-md mx-auto">
+                <p className="text-xs text-emerald-300/90 leading-relaxed">
+                  {lang === 'fr' 
+                    ? 'Votre enregistrement a été publié dans la base de données botaniques. Pour toute demande détaillée, veuillez contacter :'
+                    : 'Your observation record has been published to the botanical database. For detailed inquiries, please contact:'}
+                </p>
 
-              <div className="p-4 rounded-xl bg-[#03150d] border border-emerald-800 text-xs text-slate-300 max-w-md mx-auto space-y-2">
-                <p className="font-semibold text-emerald-400">Direct Email Dispatch</p>
-                <p className="text-[11px] text-slate-400">Destination: <strong className="text-slate-200">{ORG_INFO.contactEmail}</strong></p>
-                <a
-                  href={dispatchEmailUrl}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 text-[#03150d] font-bold text-xs hover:bg-emerald-400 transition-colors mt-2"
-                >
-                  <Mail className="w-4 h-4" /> Open Email Client to Confirm Delivery
-                </a>
+                <div className="p-3 rounded-xl bg-emerald-950 border border-emerald-700/60 font-mono text-emerald-300 text-base font-bold select-all">
+                  protectlead@npu.codes
+                </div>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2">
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-950 border border-emerald-800 hover:bg-emerald-900 transition-colors"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#03150d] bg-emerald-400 hover:bg-emerald-300 transition-colors"
                 >
-                  Log Another Observation
+                  {lang === 'fr' ? 'Enregistrer une autre observation' : 'Log Another Observation'}
                 </button>
               </div>
             </div>
@@ -359,8 +337,8 @@ export default function FieldRecorder({ lang, onAddObservation }) {
 
               {/* Submit Button */}
               <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <span className="text-xs text-slate-400 flex items-center gap-1">
-                  <Mail className="w-3.5 h-3.5 text-emerald-400" /> Submissions sync directly to: <strong className="text-slate-200">{ORG_INFO.contactEmail}</strong>
+                <span className="text-xs text-slate-400">
+                  For inquiries, please contact: <strong className="text-slate-200">protectlead@npu.codes</strong>
                 </span>
 
                 <button

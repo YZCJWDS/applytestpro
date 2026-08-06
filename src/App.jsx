@@ -9,14 +9,10 @@ import VolunteerDonateModal from './components/VolunteerDonateModal';
 import Footer from './components/Footer';
 
 export default function App() {
-  const [lang, setLang] = useState('en'); // Default to English as requested
+  const [lang, setLang] = useState('en'); // Default to English explicitly
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('donate');
   const [userObservations, setUserObservations] = useState([]);
-
-  const handleToggleLang = () => {
-    setLang((prev) => (prev === 'en' ? 'fr' : 'en'));
-  };
 
   const handleOpenDonate = () => {
     setModalMode('donate');
@@ -45,7 +41,7 @@ export default function App() {
       {/* Header Bar */}
       <Header 
         lang={lang}
-        onToggleLang={handleToggleLang}
+        setLang={setLang}
         onOpenDonate={handleOpenDonate}
         onOpenVolunteer={handleOpenVolunteer}
         onScrollTo={handleScrollTo}

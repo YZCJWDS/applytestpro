@@ -3,7 +3,7 @@ import { Leaf, ShieldCheck, Menu, X, Globe, Mail, MapPin } from 'lucide-react';
 import { ORG_INFO } from '../data/plantData';
 import { translations } from '../data/translations';
 
-export default function Header({ lang, onToggleLang, onOpenDonate, onOpenVolunteer, onScrollTo }) {
+export default function Header({ lang, setLang, onOpenDonate, onOpenVolunteer, onScrollTo }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = translations[lang];
@@ -33,22 +33,36 @@ export default function Header({ lang, onToggleLang, onOpenDonate, onOpenVolunte
               <MapPin className="w-3 h-3 text-emerald-400" /> {t.hqNotice}
             </span>
           </div>
+          
           <div className="flex items-center gap-4">
-            <a 
-              href={`mailto:${ORG_INFO.contactEmail}`}
-              className="hover:text-emerald-400 flex items-center gap-1 transition-colors"
-            >
+            <span className="text-slate-300 flex items-center gap-1 font-mono text-[11px]">
               <Mail className="w-3.5 h-3.5 text-emerald-400" /> {ORG_INFO.contactEmail}
-            </a>
+            </span>
             <span className="text-emerald-500/40">|</span>
-            <button
-              onClick={onToggleLang}
-              className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 font-bold border border-emerald-700/50 transition-colors"
-              title="Switch Language / Changer de langue"
-            >
-              <Globe className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{lang === 'en' ? 'FR (Français)' : 'EN (English)'}</span>
-            </button>
+            
+            {/* Explicit Language Switcher Buttons (EN | FR) */}
+            <div className="flex items-center rounded-lg bg-emerald-950/80 p-0.5 border border-emerald-700/60 text-[11px] font-bold">
+              <button
+                onClick={() => setLang('en')}
+                className={`px-2.5 py-0.5 rounded transition-all ${
+                  lang === 'en'
+                    ? 'bg-emerald-400 text-[#03150d] shadow-sm'
+                    : 'text-emerald-300 hover:text-white'
+                }`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLang('fr')}
+                className={`px-2.5 py-0.5 rounded transition-all ${
+                  lang === 'fr'
+                    ? 'bg-emerald-400 text-[#03150d] shadow-sm'
+                    : 'text-emerald-300 hover:text-white'
+                }`}
+              >
+                Français
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -107,15 +121,31 @@ export default function Header({ lang, onToggleLang, onOpenDonate, onOpenVolunte
             </button>
           </nav>
 
-          {/* Action CTAs & Language Switcher */}
+          {/* Explicit Language Switcher & CTAs */}
           <div className="hidden sm:flex items-center gap-3">
-            <button
-              onClick={onToggleLang}
-              className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-700/50 hover:bg-emerald-900 transition-colors flex items-center gap-1"
-            >
-              <Globe className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{lang.toUpperCase()}</span>
-            </button>
+            <div className="flex items-center rounded-lg bg-emerald-950/80 p-0.5 border border-emerald-700/60 text-xs font-bold">
+              <button
+                onClick={() => setLang('en')}
+                className={`px-2.5 py-1 rounded transition-all ${
+                  lang === 'en'
+                    ? 'bg-emerald-400 text-[#03150d] shadow-sm'
+                    : 'text-emerald-300 hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLang('fr')}
+                className={`px-2.5 py-1 rounded transition-all ${
+                  lang === 'fr'
+                    ? 'bg-emerald-400 text-[#03150d] shadow-sm'
+                    : 'text-emerald-300 hover:text-white'
+                }`}
+              >
+                FR
+              </button>
+            </div>
+
             <button
               onClick={onOpenVolunteer}
               className="px-3.5 py-2 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/50 transition-all shadow-sm"
@@ -132,12 +162,20 @@ export default function Header({ lang, onToggleLang, onOpenDonate, onOpenVolunte
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
-            <button
-              onClick={onToggleLang}
-              className="px-2 py-1 rounded text-xs font-bold text-emerald-300 bg-emerald-950 border border-emerald-700"
-            >
-              {lang.toUpperCase()}
-            </button>
+            <div className="flex items-center rounded bg-emerald-950 p-0.5 border border-emerald-700 text-xs font-bold">
+              <button
+                onClick={() => setLang('en')}
+                className={`px-1.5 py-0.5 rounded ${lang === 'en' ? 'bg-emerald-400 text-[#03150d]' : 'text-emerald-300'}`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLang('fr')}
+                className={`px-1.5 py-0.5 rounded ${lang === 'fr' ? 'bg-emerald-400 text-[#03150d]' : 'text-emerald-300'}`}
+              >
+                FR
+              </button>
+            </div>
             <button
               onClick={onOpenDonate}
               className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#03150d] bg-emerald-400"
