@@ -18,7 +18,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
     observer: 'Subarctic Observer',
   });
 
-  const [previewImage, setPreviewImage] = useState('/plants/black-spruce.svg');
+  const [previewImage, setPreviewImage] = useState('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');
   const [submitted, setSubmitted] = useState(false);
 
   const nwtPresets = [
@@ -26,7 +26,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       name: 'Black Spruce (Épinette noire)',
       latin: 'Picea mariana',
       cat: 'Trees',
-      img: '/plants/black-spruce.svg'
+      img: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80'
     },
     {
       name: 'Cloudberry (Plaquebière)',
@@ -44,7 +44,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       name: 'Dwarf Birch (Bouleau nain)',
       latin: 'Betula glandulosa',
       cat: 'Shrubs & Berries',
-      img: '/plants/dwarf-birch.svg'
+      img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'
     }
   ];
 
