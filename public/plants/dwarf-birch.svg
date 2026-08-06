@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bgDB" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f3822" />
+      <stop offset="100%" stop-color="#03150d" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgDB)" />
+
+  <!-- Dwarf Birch Shrub -->
+  <g transform="translate(400, 440)">
+    <path d="M -150 0 C -100 -80, -50 -160, 0 -220 C 50 -160, 100 -80, 150 0" fill="#15803d" />
+    <path d="M -100 -20 C -60 -100, -20 -180, 0 -240 C 20 -180, 60 -100, 100 -20" fill="#22c55e" opacity="0.8" />
+    
+    <!-- Small round scalloped leaves -->
+    <circle cx="-60" cy="-140" r="22" fill="#4ade80"/>
+    <circle cx="60" cy="-140" r="22" fill="#86efac"/>
+    <circle cx="0" cy="-190" r="25" fill="#4ade80"/>
+    <circle cx="-30" cy="-100" r="20" fill="#16a34a"/>
+    <circle cx="30" cy="-100" r="20" fill="#16a34a"/>
+  </g>
+
+  <!-- Tag -->
+  <rect x="30" y="30" width="280" height="45" rx="8" fill="#03150d" opacity="0.85" stroke="#4ade80" stroke-width="1"/>
+  <text x="45" y="58" fill="#86efac" font-family="sans-serif" font-size="16" font-weight="bold">Dwarf Birch (Betula glandulosa)</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c3d28" />
+      <stop offset="100%" stop-color="#02180e" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg2)" />
+  
+  <!-- White Spruce Forest Canopy Vector -->
+  <g transform="translate(400, 480)">
+    <rect x="-16" y="-420" width="32" height="420" fill="#3a2517" />
+    
+    <!-- Outer Canopy -->
+    <polygon points="0,-430 -60,-360 -20,-365 -100,-280 -30,-285 -150,-180 -40,-185 -220,-40 0,-50" fill="#16a34a" />
+    <polygon points="0,-430 60,-360 20,-365 100,-280 30,-285 150,-180 40,-185 220,-40 0,-50" fill="#15803d" />
+    
+    <!-- Highlights -->
+    <polygon points="0,-410 -40,-350 0,-355 -70,-270 0,-275 -110,-170 0,-175 Z" fill="#86efac" opacity="0.35"/>
+  </g>
+
+  <!-- Tag -->
+  <rect x="30" y="30" width="260" height="45" rx="8" fill="#03150d" opacity="0.85" stroke="#22c55e" stroke-width="1"/>
+  <text x="45" y="58" fill="#4ade80" font-family="sans-serif" font-size="16" font-weight="bold">White Spruce (Picea glauca)</text>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a2e1d" />
+      <stop offset="100%" stop-color="#03150d" />
+    </linearGradient>
+    <linearGradient id="needle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#14532d" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)" />
+  
+  <!-- Subtle mist -->
+  <ellipse cx="400" cy="350" rx="350" ry="80" fill="#166534" opacity="0.2" filter="blur(30px)"/>
+
+  <!-- Black Spruce Silhouette & Needles -->
+  <g transform="translate(400, 480) scale(1.1)">
+    <!-- Trunk -->
+    <rect x="-12" y="-400" width="24" height="400" fill="#2d1c10" />
+    
+    <!-- Conifer Branches Layer 1-8 -->
+    <path d="M 0 -380 L -40 -340 L -15 -345 L -70 -290 L -25 -295 L -110 -220 L -35 -225 L -160 -120 L -40 -125 L -200 0 L 0 -10 Z" fill="url(#needle)" />
+    <path d="M 0 -380 L 40 -340 L 15 -345 L 70 -290 L 25 -295 L 110 -220 L 35 -225 L 160 -120 L 40 -125 L 200 0 L 0 -10 Z" fill="#15803d" />
+    <path d="M 0 -370 L -30 -330 L 0 -335 L 50 -280 L 0 -285 L 80 -210 L 0 -215 L 130 -110 L 0 -115 Z" fill="#4ade80" opacity="0.4" />
+  </g>
+
+  <!-- Specimen Tag Overlay -->
+  <rect x="30" y="30" width="260" height="45" rx="8" fill="#03150d" opacity="0.85" stroke="#22c55e" stroke-width="1"/>
+  <text x="45" y="58" fill="#4ade80" font-family="sans-serif" font-size="16" font-weight="bold">Black Spruce (Picea mariana)</text>
+</svg>

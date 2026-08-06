@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bgTL" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1b3d17" />
+      <stop offset="100%" stop-color="#03150d" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgTL)" />
+
+  <!-- Tamarack Larch Tree -->
+  <g transform="translate(400, 480)">
+    <rect x="-14" y="-400" width="28" height="400" fill="#382415" />
+    
+    <polygon points="0,-410 -50,-350 0,-355 50,-350" fill="#a3e635" />
+    <polygon points="0,-360 -90,-280 0,-285 90,-280" fill="#84cc16" />
+    <polygon points="0,-290 -130,-190 0,-195 130,-190" fill="#65a30d" />
+    <polygon points="0,-200 -180,-80 0,-85 180,-80" fill="#4d7c0f" />
+  </g>
+
+  <!-- Tag -->
+  <rect x="30" y="30" width="280" height="45" rx="8" fill="#03150d" opacity="0.85" stroke="#a3e635" stroke-width="1"/>
+  <text x="45" y="58" fill="#bef264" font-family="sans-serif" font-size="16" font-weight="bold">Tamarack Larch (Larix laricina)</text>
+</svg>

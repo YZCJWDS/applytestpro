@@ -18,7 +18,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
     observer: 'Subarctic Observer',
   });
 
-  const [previewImage, setPreviewImage] = useState('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');
+  const [previewImage, setPreviewImage] = useState('/plants/black-spruce.svg');
   const [submitted, setSubmitted] = useState(false);
 
   const nwtPresets = [
@@ -26,25 +26,25 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       name: 'Black Spruce (Épinette noire)',
       latin: 'Picea mariana',
       cat: 'Trees',
-      img: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80'
+      img: '/plants/black-spruce.svg'
     },
     {
       name: 'Fireweed (Épilobe)',
       latin: 'Chamaenerion angustifolium',
       cat: 'Wildflowers & Bogs',
-      img: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=800&q=80'
+      img: '/plants/fireweed.svg'
     },
     {
       name: 'Trembling Aspen (Peuplier)',
       latin: 'Populus tremuloides',
       cat: 'Trees',
-      img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
+      img: '/plants/trembling-aspen.svg'
     },
     {
       name: 'Dwarf Birch (Bouleau nain)',
       latin: 'Betula glandulosa',
       cat: 'Shrubs & Berries',
-      img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'
+      img: '/plants/dwarf-birch.svg'
     }
   ];
 

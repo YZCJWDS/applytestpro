@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bgF" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#190e24" />
+      <stop offset="100%" stop-color="#03150d" />
+    </linearGradient>
+    <radialGradient id="pinkGlow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#190e24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bgF)" />
+  <rect width="800" height="500" fill="url(#pinkGlow)" />
+
+  <!-- Fireweed Stem & Leaves -->
+  <g transform="translate(400, 480)">
+    <!-- Main Stem -->
+    <path d="M 0 0 C -10 -150, 10 -300, 0 -440" fill="none" stroke="#22c55e" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Leaves -->
+    <path d="M 0 -100 C -60 -110, -120 -90, -160 -80 C -100 -60, -40 -75, 0 -100" fill="#15803d" />
+    <path d="M 0 -120 C 60 -130, 120 -110, 160 -100 C 100 -80, 40 -95, 0 -120" fill="#16a34a" />
+    <path d="M 0 -180 C -50 -190, -100 -170, -140 -160 C -90 -140, -30 -155, 0 -180" fill="#15803d" />
+    <path d="M 0 -200 C 50 -210, 100 -190, 140 -180 C 90 -160, 30 -175, 0 -200" fill="#16a34a" />
+
+    <!-- Magenta Pink Fireweed Flower Spike Petals -->
+    <!-- Flower Cluster 1 -->
+    <g transform="translate(0, -260)">
+      <circle cx="0" cy="0" r="14" fill="#f43f5e" />
+      <circle cx="-16" cy="-8" r="12" fill="#ec4899" />
+      <circle cx="16" cy="-8" r="12" fill="#ec4899" />
+      <circle cx="-10" cy="14" r="12" fill="#e11d48" />
+      <circle cx="10" cy="14" r="12" fill="#e11d48" />
+      <circle cx="0" cy="0" r="5" fill="#fef08a" />
+    </g>
+
+    <!-- Flower Cluster 2 -->
+    <g transform="translate(-20, -300)">
+      <circle cx="0" cy="0" r="12" fill="#f43f5e" />
+      <circle cx="-14" cy="-6" r="10" fill="#ec4899" />
+      <circle cx="14" cy="-6" r="10" fill="#ec4899" />
+      <circle cx="0" cy="0" r="4" fill="#fef08a" />
+    </g>
+
+    <g transform="translate(20, -330)">
+      <circle cx="0" cy="0" r="12" fill="#f43f5e" />
+      <circle cx="-14" cy="-6" r="10" fill="#ec4899" />
+      <circle cx="14" cy="-6" r="10" fill="#ec4899" />
+      <circle cx="0" cy="0" r="4" fill="#fef08a" />
+    </g>
+
+    <!-- Top Buds -->
+    <g transform="translate(0, -380)">
+      <circle cx="0" cy="0" r="10" fill="#ec4899" />
+      <circle cx="-10" cy="-10" r="8" fill="#f43f5e" />
+      <circle cx="10" cy="-10" r="8" fill="#f43f5e" />
+      <circle cx="0" cy="-25" r="6" fill="#fb7185" />
+      <circle cx="0" cy="-40" r="4" fill="#fda4af" />
+    </g>
+  </g>
+
+  <!-- Tag Overlay -->
+  <rect x="30" y="30" width="310" height="45" rx="8" fill="#03150d" opacity="0.85" stroke="#ec4899" stroke-width="1"/>
+  <text x="45" y="58" fill="#f472b6" font-family="sans-serif" font-size="16" font-weight="bold">Fireweed (Chamaenerion angustifolium)</text>
+</svg>

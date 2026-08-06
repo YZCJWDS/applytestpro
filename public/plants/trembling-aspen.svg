@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bgAspen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#143823" />
+      <stop offset="100%" stop-color="#03150d" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgAspen)" />
+
+  <!-- Trembling Aspen White Bark & Green Leaves -->
+  <g transform="translate(400, 480)">
+    <!-- White Bark Trunk with scars -->
+    <rect x="-20" y="-440" width="40" height="440" fill="#f8fafc" rx="4"/>
+    <path d="M -20 -380 L -5 -380 M 5 -320 L 20 -320 M -20 -250 L 10 -250 M -10 -160 L 20 -160 M -20 -90 L 0 -90" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Black eye scars typical of aspen -->
+    <ellipse cx="0" cy="-300" rx="8" ry="4" fill="#1e293b"/>
+    <ellipse cx="-5" cy="-180" rx="10" ry="5" fill="#1e293b"/>
+
+    <!-- Canopy Clusters (Rounded heart-shaped aspen leaves) -->
+    <g transform="translate(0, -350)">
+      <circle cx="-70" cy="-40" r="55" fill="#22c55e" opacity="0.9"/>
+      <circle cx="70" cy="-40" r="55" fill="#16a34a" opacity="0.9"/>
+      <circle cx="0" cy="-80" r="65" fill="#4ade80" opacity="0.85"/>
+      <circle cx="-40" cy="-110" r="45" fill="#86efac" opacity="0.8"/>
+      <circle cx="40" cy="-110" r="45" fill="#22c55e" opacity="0.8"/>
+
+      <!-- Autumn Gold accents -->
+      <circle cx="-30" cy="-50" r="25" fill="#eab308" opacity="0.7"/>
+      <circle cx="30" cy="-70" r="30" fill="#facc15" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- Tag Overlay -->
+  <rect x="30" y="30" width="310" height="45" rx="8" fill="#03150d" opacity="0.85" stroke="#eab308" stroke-width="1"/>
+  <text x="45" y="58" fill="#fde047" font-family="sans-serif" font-size="16" font-weight="bold">Trembling Aspen (Populus tremuloides)</text>
+</svg>

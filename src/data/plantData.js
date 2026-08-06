@@ -35,7 +35,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 92,
     phenology: "Active Needle Growth & Cone Formation",
     notes: "Dominant boreal tree specimen observed in muskeg terrain near Fort Smith. Dense foliage crown with healthy resin production. Trunk circumference 88 cm.",
-    image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/black-spruce.svg",
     tags: ["Subarctic Boreal", "Conifer", "Muskeg Native"]
   },
   {
@@ -52,7 +52,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 96,
     phenology: "Cone Seed Maturation",
     notes: "Riparian terrace forest along South Nahanni River. Specimen height 24 meters with dense upper canopy structure. No needle cast fungus detected.",
-    image: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/white-spruce.svg",
     tags: ["Riparian Taiga", "Old-Growth Spruce", "Nahanni Valley"]
   },
   {
@@ -69,7 +69,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 95,
     phenology: "Peak Magenta Flowering Bloom",
     notes: "Vibrant native subarctic wildflower patch in full blossom near Great Slave Lake. Pollinator activity high (Bombus polaris observed). Stem height 1.2m.",
-    image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/fireweed.svg",
     tags: ["Wildflower", "Subarctic Native", "Pollinator Habitat"]
   },
   {
@@ -86,7 +86,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 91,
     phenology: "Late Summer Foliage",
     notes: "Resilient low carpet shrub lining thermokarst depression. Glandular resinous twigs observed. Plant height 0.6m. Permafrost active layer depth 45 cm.",
-    image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/dwarf-birch.svg",
     tags: ["Tundra Shrub", "Subarctic Native", "Permafrost Zone"]
   },
   {
@@ -103,7 +103,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 94,
     phenology: "Vibrant Summer Foliage",
     notes: "Healthy deciduous boreal tree stand. Smooth white bark with dark scars. Leaves fluttering actively under light wind, zero leaf spot pathology.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/trembling-aspen.svg",
     tags: ["Deciduous Tree", "Boreal Forest", "Native Aspen"]
   },
   {
@@ -120,7 +120,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 93,
     phenology: "Soft Needle Cluster Growth",
     notes: "Deciduous conifer specimen growing in minerotrophic fen. Soft light-green needles. Water table pH measured at 6.7.",
-    image: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/tamarack-larch.svg",
     tags: ["Deciduous Conifer", "Fen Habitat", "Northern Larch"]
   }
 ];
