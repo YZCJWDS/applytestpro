@@ -35,7 +35,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 92,
     phenology: "Active Needle Growth & Cone Formation",
     notes: "Dominant boreal tree specimen observed in muskeg terrain near Fort Smith. Dense foliage crown with healthy resin production. Trunk circumference 88 cm.",
-    image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/black-spruce.svg",
     tags: ["Subarctic Boreal", "Conifer", "Muskeg Native"]
   },
   {
@@ -52,7 +52,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 96,
     phenology: "Cone Seed Maturation",
     notes: "Riparian terrace forest along South Nahanni River. Specimen height 24 meters with dense upper canopy structure. No needle cast fungus detected.",
-    image: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/white-spruce.svg",
     tags: ["Riparian Taiga", "Old-Growth Spruce", "Nahanni Valley"]
   },
   {
@@ -69,7 +69,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 89,
     phenology: "Amber Berry Ripening State",
     notes: "Extensive peat bog patch covering 120 sq. meters. Golden-amber aggregate berries forming healthily above Sphagnum moss layer.",
-    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/cloudberry.jpg",
     tags: ["Sphagnum Bog", "Subarctic Edible", "Peatland Flora"]
   },
   {
@@ -86,7 +86,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 91,
     phenology: "Late Summer Foliage",
     notes: "Resilient low carpet shrub lining thermokarst depression. Glandular resinous twigs observed. Plant height 0.6m. Permafrost active layer depth 45 cm.",
-    image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/dwarf-birch.svg",
     tags: ["Tundra Shrub", "Subarctic Native", "Permafrost Zone"]
   },
   {
@@ -103,7 +103,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 95,
     phenology: "Green Fruit Setting",
     notes: "Evergreen dwarf shrub carpet beneath Jack Pine & Spruce canopy. Thick leathery leaves showing vibrant chlorophyll levels.",
-    image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/mountain-cranberry.jpg",
     tags: ["Evergreen Shrub", "Boreal Floor", "Edible Berry"]
   },
   {
@@ -120,7 +120,7 @@ export const SAMPLE_OBSERVATIONS = [
     healthIndex: 93,
     phenology: "Soft Needle Cluster Growth",
     notes: "Deciduous conifer specimen growing in minerotrophic fen. Soft light-green needles. Water table pH measured at 6.7.",
-    image: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80",
+    image: "/plants/tamarack-larch.svg",
     tags: ["Deciduous Conifer", "Fen Habitat", "Northern Larch"]
   }
 ];
