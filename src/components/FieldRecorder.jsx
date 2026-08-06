@@ -18,7 +18,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
     observer: 'Subarctic Observer',
   });
 
-  const [previewImage, setPreviewImage] = useState('/plants/black-spruce.svg');
+  const [previewImage, setPreviewImage] = useState('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');
   const [submitted, setSubmitted] = useState(false);
 
   const nwtPresets = [
@@ -26,25 +26,25 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       name: 'Black Spruce (Épinette noire)',
       latin: 'Picea mariana',
       cat: 'Trees',
-      img: '/plants/black-spruce.svg'
+      img: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80'
     },
     {
-      name: 'Fireweed (Épilobe)',
-      latin: 'Chamaenerion angustifolium',
+      name: 'Cloudberry (Plaquebière)',
+      latin: 'Rubus chamaemorus',
       cat: 'Wildflowers & Bogs',
-      img: '/plants/fireweed.svg'
+      img: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80'
     },
     {
-      name: 'Trembling Aspen (Peuplier)',
-      latin: 'Populus tremuloides',
-      cat: 'Trees',
-      img: '/plants/trembling-aspen.svg'
+      name: 'Mountain Cranberry (Airelle)',
+      latin: 'Vaccinium vitis-idaea',
+      cat: 'Shrubs & Berries',
+      img: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80'
     },
     {
       name: 'Dwarf Birch (Bouleau nain)',
       latin: 'Betula glandulosa',
       cat: 'Shrubs & Berries',
-      img: '/plants/dwarf-birch.svg'
+      img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'
     }
   ];
 
@@ -193,7 +193,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Black Spruce, Fireweed"
+                    placeholder="e.g. Black Spruce, Cloudberry"
                     value={formData.commonName}
                     onChange={(e) => setFormData({ ...formData, commonName: e.target.value })}
                     className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400"
