@@ -29,22 +29,22 @@ export default function FieldRecorder({ lang, onAddObservation }) {
       img: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80'
     },
     {
-      name: 'Cloudberry (Plaquebière)',
-      latin: 'Rubus chamaemorus',
+      name: 'Fireweed (Épilobe)',
+      latin: 'Chamaenerion angustifolium',
       cat: 'Wildflowers & Bogs',
-      img: 'https://images.unsplash.com/photo-1628151016026-5d470bfb6805?auto=format&fit=crop&w=800&q=80'
+      img: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=800&q=80'
+    },
+    {
+      name: 'Trembling Aspen (Peuplier)',
+      latin: 'Populus tremuloides',
+      cat: 'Trees',
+      img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
     },
     {
       name: 'Dwarf Birch (Bouleau nain)',
       latin: 'Betula glandulosa',
       cat: 'Shrubs & Berries',
       img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'
-    },
-    {
-      name: 'Mountain Cranberry (Airelle)',
-      latin: 'Vaccinium vitis-idaea',
-      cat: 'Shrubs & Berries',
-      img: 'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80'
     }
   ];
 
@@ -193,7 +193,7 @@ export default function FieldRecorder({ lang, onAddObservation }) {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Black Spruce, Cloudberry"
+                    placeholder="e.g. Black Spruce, Fireweed"
                     value={formData.commonName}
                     onChange={(e) => setFormData({ ...formData, commonName: e.target.value })}
                     className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400"
