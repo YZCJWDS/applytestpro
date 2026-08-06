@@ -9,9 +9,14 @@ import VolunteerDonateModal from './components/VolunteerDonateModal';
 import Footer from './components/Footer';
 
 export default function App() {
+  const [lang, setLang] = useState('en'); // Default to English as requested
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('donate');
   const [userObservations, setUserObservations] = useState([]);
+
+  const handleToggleLang = () => {
+    setLang((prev) => (prev === 'en' ? 'fr' : 'en'));
+  };
 
   const handleOpenDonate = () => {
     setModalMode('donate');
@@ -39,6 +44,8 @@ export default function App() {
       
       {/* Header Bar */}
       <Header 
+        lang={lang}
+        onToggleLang={handleToggleLang}
         onOpenDonate={handleOpenDonate}
         onOpenVolunteer={handleOpenVolunteer}
         onScrollTo={handleScrollTo}
@@ -47,21 +54,27 @@ export default function App() {
       {/* Main Content Areas */}
       <main className="flex-grow">
         <Hero 
+          lang={lang}
           onScrollTo={handleScrollTo}
           onOpenVolunteer={handleOpenVolunteer}
         />
 
-        <CharityVerification />
+        <CharityVerification 
+          lang={lang}
+        />
 
         <ObservationExplorer 
+          lang={lang}
           customObservations={userObservations}
         />
 
         <FieldRecorder 
+          lang={lang}
           onAddObservation={handleAddObservation}
         />
 
         <ConservationProjects 
+          lang={lang}
           onOpenDonate={handleOpenDonate}
           onOpenVolunteer={handleOpenVolunteer}
         />
@@ -69,6 +82,7 @@ export default function App() {
 
       {/* Footer */}
       <Footer 
+        lang={lang}
         onScrollTo={handleScrollTo}
         onOpenDonate={handleOpenDonate}
         onOpenVolunteer={handleOpenVolunteer}
@@ -76,6 +90,7 @@ export default function App() {
 
       {/* Volunteer & Donate Modal */}
       <VolunteerDonateModal 
+        lang={lang}
         isOpen={modalOpen}
         mode={modalMode}
         onClose={() => setModalOpen(false)}

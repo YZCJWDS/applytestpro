@@ -1,8 +1,11 @@
 import React from 'react';
-import { ShieldCheck, Compass, Trees, Sprout, ArrowRight, Activity, MapPin } from 'lucide-react';
+import { Compass, MapPin, Activity } from 'lucide-react';
 import { CONSERVATION_PROJECTS } from '../data/plantData';
+import { translations } from '../data/translations';
 
-export default function ConservationProjects({ onOpenDonate, onOpenVolunteer }) {
+export default function ConservationProjects({ lang, onOpenDonate, onOpenVolunteer }) {
+  const t = translations[lang];
+
   return (
     <section id="projects" className="py-24 relative bg-[#03150d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,13 +14,13 @@ export default function ConservationProjects({ onOpenDonate, onOpenVolunteer }) 
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-700/50 text-emerald-300 text-xs font-semibold mb-3">
             <Compass className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Active Initiatives (生态保护项目)</span>
+            <span>{t.projectsTag}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
-            Conservation & Research Programs
+            {t.projectsTitle}
           </h2>
           <p className="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
-            By observing trends in plant health and climate shifts, we deploy target action plans to protect vulnerable ecosystems across North America.
+            {t.projectsDesc}
           </p>
         </div>
 
@@ -39,11 +42,11 @@ export default function ConservationProjects({ onOpenDonate, onOpenVolunteer }) 
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-100 group-hover:text-emerald-300 transition-colors">
-                  {proj.title}
+                  {lang === 'fr' && proj.titleFr ? proj.titleFr : proj.title}
                 </h3>
 
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {proj.focus}
+                  {lang === 'fr' && proj.focusFr ? proj.focusFr : proj.focus}
                 </p>
               </div>
 
@@ -51,7 +54,9 @@ export default function ConservationProjects({ onOpenDonate, onOpenVolunteer }) 
               <div className="space-y-3 pt-4 border-t border-emerald-900/50">
                 <div className="p-3 rounded-xl bg-[#03150d]/80 border border-emerald-800/40">
                   <span className="text-[10px] font-bold uppercase text-emerald-400 tracking-wider">Quantified Impact</span>
-                  <p className="text-xs text-slate-200 font-medium mt-0.5">{proj.impact}</p>
+                  <p className="text-xs text-slate-200 font-medium mt-0.5">
+                    {lang === 'fr' && proj.impactFr ? proj.impactFr : proj.impact}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-slate-400">
@@ -69,23 +74,23 @@ export default function ConservationProjects({ onOpenDonate, onOpenVolunteer }) 
         <div className="mt-16 glass-panel rounded-3xl p-8 sm:p-10 border border-emerald-500/30 text-center relative overflow-hidden">
           <div className="relative z-10 max-w-2xl mx-auto space-y-4">
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-100">
-              Support Plant Observation Science Today
+              {t.ctaTitle}
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Every tax-deductible contribution aids field equipment, botanical research sensors, and community observation workshops.
+              {t.ctaDesc}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <button
                 onClick={onOpenDonate}
                 className="px-6 py-3 rounded-xl text-xs font-bold text-[#03150d] bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 shadow-lg shadow-emerald-500/25 transition-all"
               >
-                Make a Tax-Deductible Donation
+                {t.btnMakeDonation}
               </button>
               <button
                 onClick={onOpenVolunteer}
                 className="px-6 py-3 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/50 transition-all"
               >
-                Apply as Field Observer Volunteer
+                {t.btnApplyVolunteer}
               </button>
             </div>
           </div>

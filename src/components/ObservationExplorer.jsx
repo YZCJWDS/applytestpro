@@ -1,40 +1,31 @@
 import React, { useState } from 'react';
-import { Search, Filter, MapPin, Calendar, User, Activity, Info, X, ShieldAlert, Sparkles, Tag } from 'lucide-react';
+import { Search, MapPin, Calendar, User, Activity, Info, X, Sparkles, Tag } from 'lucide-react';
 import { SAMPLE_OBSERVATIONS } from '../data/plantData';
+import { translations } from '../data/translations';
 
-export default function ObservationExplorer({ customObservations = [] }) {
+export default function ObservationExplorer({ lang, customObservations = [] }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedStatus, setSelectedStatus] = useState('All');
   const [activeModalSpecimen, setActiveModalSpecimen] = useState(null);
+  const t = translations[lang];
 
-  // Combine initial sample data with any newly submitted user observations
   const allObservations = [...customObservations, ...SAMPLE_OBSERVATIONS];
 
-  const categories = ['All', 'Trees', 'Wildflowers', 'Ferns & Mosses'];
-  const statuses = ['All', 'Stable', 'Vulnerable', 'Protected', 'Endangered'];
+  const categories = [
+    { key: 'All', label: t.catAll },
+    { key: 'Trees', label: t.catTrees },
+    { key: 'Shrubs & Berries', label: t.catShrubs },
+    { key: 'Wildflowers & Bogs', label: t.catWildflowers }
+  ];
 
   const filteredObservations = allObservations.filter(obs => {
-    const matchesSearch = obs.commonName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          obs.scientificName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          obs.location.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = (obs.commonName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (obs.commonNameFr || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (obs.scientificName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (obs.location || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || obs.category === selectedCategory;
-    const matchesStatus = selectedStatus === 'All' || obs.status === selectedStatus;
-    return matchesSearch && matchesCategory && matchesStatus;
+    return matchesSearch && matchesCategory;
   });
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Endangered':
-        return 'bg-rose-950/80 text-rose-300 border-rose-700/60';
-      case 'Vulnerable':
-        return 'bg-amber-950/80 text-amber-300 border-amber-700/60';
-      case 'Protected':
-        return 'bg-emerald-950/80 text-emerald-300 border-emerald-700/60';
-      default:
-        return 'bg-teal-950/80 text-teal-300 border-teal-700/60';
-    }
-  };
 
   return (
     <section id="explorer" className="py-24 relative bg-[#03150d]">
@@ -45,19 +36,19 @@ export default function ObservationExplorer({ customObservations = [] }) {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-700/50 text-emerald-300 text-xs font-semibold mb-3">
               <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Plant Observation Database (记录 & 观察)</span>
+              <span>{t.explorerTag}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
-              Recorded Botanical Observations
+              {t.explorerTitle}
             </h2>
             <p className="mt-2 text-slate-300 text-sm sm:text-base max-w-2xl">
-              Explore geotagged records of plant species, phenology states, and habitat health indicators documented by our research team and citizen scientists.
+              {t.explorerDesc}
             </p>
           </div>
 
           <div className="text-right">
-            <span className="text-xs text-slate-400 font-mono">Total Verified Logged Entries</span>
-            <p className="text-2xl font-extrabold text-emerald-400 font-mono">{allObservations.length} Active Records Shown</p>
+            <span className="text-xs text-slate-400 font-mono">NWT Authenticated Log Entries</span>
+            <p className="text-2xl font-extrabold text-emerald-400 font-mono">{allObservations.length} Verified Records</p>
           </div>
         </div>
 
@@ -70,7 +61,7 @@ export default function ObservationExplorer({ customObservations = [] }) {
               <Search className="w-4 h-4 text-emerald-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search species name, scientific taxonomy, or region..."
+                placeholder={t.searchPlaceholder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-[#03150d] text-slate-100 text-sm pl-10 pr-4 py-2.5 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
@@ -79,40 +70,21 @@ export default function ObservationExplorer({ customObservations = [] }) {
 
             {/* Category Filter Pills */}
             <div className="md:col-span-6 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold text-slate-400 mr-1 hidden sm:inline">Category:</span>
               {categories.map(cat => (
                 <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
+                  key={cat.key}
+                  onClick={() => setSelectedCategory(cat.key)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    selectedCategory === cat
+                    selectedCategory === cat.key
                       ? 'bg-emerald-500 text-[#03150d] shadow-md shadow-emerald-500/20'
                       : 'bg-emerald-950/60 text-slate-300 hover:bg-emerald-900/60 border border-emerald-800/40'
                   }`}
                 >
-                  {cat}
+                  {cat.label}
                 </button>
               ))}
             </div>
 
-          </div>
-
-          {/* Secondary Status Filter */}
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-900/40 text-xs">
-            <span className="text-slate-400 font-medium">Status Filter:</span>
-            {statuses.map(st => (
-              <button
-                key={st}
-                onClick={() => setSelectedStatus(st)}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors ${
-                  selectedStatus === st
-                    ? 'bg-emerald-800 text-emerald-200 border border-emerald-600'
-                    : 'text-slate-400 hover:text-emerald-300'
-                }`}
-              >
-                {st}
-              </button>
-            ))}
           </div>
         </div>
 
@@ -138,13 +110,13 @@ export default function ObservationExplorer({ customObservations = [] }) {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-[#03150d]/80 text-emerald-300 backdrop-blur-md border border-emerald-700/50">
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-[#03150d]/90 text-emerald-300 backdrop-blur-md border border-emerald-700/50">
                       {obs.category}
                     </span>
                   </div>
                   <div className="absolute top-3 right-3">
-                    <span className={`px-2.5 py-1 rounded-md text-[11px] font-bold border backdrop-blur-md ${getStatusBadge(obs.status)}`}>
+                    <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-950/90 text-emerald-300 border border-emerald-600/60 backdrop-blur-md">
                       {obs.status}
                     </span>
                   </div>
@@ -159,7 +131,7 @@ export default function ObservationExplorer({ customObservations = [] }) {
                     </div>
 
                     <h3 className="text-lg font-bold text-slate-100 group-hover:text-emerald-300 transition-colors">
-                      {obs.commonName}
+                      {lang === 'fr' && obs.commonNameFr ? obs.commonNameFr : obs.commonName}
                     </h3>
                     <p className="text-xs text-slate-400 italic font-serif">
                       {obs.scientificName}
@@ -178,7 +150,7 @@ export default function ObservationExplorer({ customObservations = [] }) {
                         <span className="truncate max-w-[170px]">{obs.location}</span>
                       </span>
                       <span className="flex items-center gap-1 text-emerald-400 font-semibold">
-                        <Activity className="w-3.5 h-3.5" /> {obs.healthIndex}% Health
+                        <Activity className="w-3.5 h-3.5" /> {obs.healthIndex}%
                       </span>
                     </div>
 
@@ -194,7 +166,7 @@ export default function ObservationExplorer({ customObservations = [] }) {
                       onClick={() => setActiveModalSpecimen(obs)}
                       className="w-full mt-2 py-2 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-900/40 hover:bg-emerald-800/60 border border-emerald-700/40 transition-colors flex items-center justify-center gap-1"
                     >
-                      <Info className="w-3.5 h-3.5" /> View Full Field Record
+                      <Info className="w-3.5 h-3.5" /> {t.viewFieldRecord}
                     </button>
                   </div>
 
@@ -228,7 +200,7 @@ export default function ObservationExplorer({ customObservations = [] }) {
                     {activeModalSpecimen.id}
                   </span>
                   <h3 className="text-2xl font-extrabold text-white mt-1">
-                    {activeModalSpecimen.commonName}
+                    {lang === 'fr' && activeModalSpecimen.commonNameFr ? activeModalSpecimen.commonNameFr : activeModalSpecimen.commonName}
                   </h3>
                   <p className="text-sm text-emerald-300 italic font-serif">
                     {activeModalSpecimen.scientificName}
@@ -247,7 +219,7 @@ export default function ObservationExplorer({ customObservations = [] }) {
                     <p className="font-bold text-emerald-400 text-sm mt-0.5">{activeModalSpecimen.status}</p>
                   </div>
                   <div className="p-3 rounded-xl bg-[#03150d] border border-emerald-900/60 col-span-2 sm:col-span-1">
-                    <span className="text-slate-400">Health Rating</span>
+                    <span className="text-slate-400">{t.healthRating}</span>
                     <p className="font-bold text-emerald-400 text-sm mt-0.5">{activeModalSpecimen.healthIndex}% (Optimal)</p>
                   </div>
                 </div>
@@ -259,20 +231,20 @@ export default function ObservationExplorer({ customObservations = [] }) {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div className="flex items-center gap-2 text-slate-300">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-emerald-400" />
-                    <span>Coordinates: <strong>{activeModalSpecimen.coordinates}</strong></span>
+                    <span>Location: <strong>{activeModalSpecimen.location}</strong></span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-emerald-400" />
-                    <span>Observer: <strong>{activeModalSpecimen.observer}</strong></span>
+                    <span>{t.observedBy}: <strong>{activeModalSpecimen.observer}</strong></span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-emerald-400" />
                     <span>Observed Date: <strong>{activeModalSpecimen.observedDate}</strong></span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex items-center gap-2">
                     <Activity className="w-4 h-4 text-emerald-400" />
                     <span>Phenology: <strong>{activeModalSpecimen.phenology}</strong></span>
                   </div>

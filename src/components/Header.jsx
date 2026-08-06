@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Leaf, ShieldCheck, Menu, X, Search, Globe, ChevronRight, FileText } from 'lucide-react';
+import { Leaf, ShieldCheck, Menu, X, Globe, Mail, MapPin } from 'lucide-react';
 import { ORG_INFO } from '../data/plantData';
+import { translations } from '../data/translations';
 
-export default function Header({ onOpenDonate, onOpenVolunteer, onScrollTo }) {
+export default function Header({ lang, onToggleLang, onOpenDonate, onOpenVolunteer, onScrollTo }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const t = translations[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,27 +18,37 @@ export default function Header({ onOpenDonate, onOpenVolunteer, onScrollTo }) {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-[#03150d]/90 backdrop-blur-md border-b border-emerald-900/40 py-3 shadow-2xl' : 'bg-transparent py-5'
+      isScrolled ? 'bg-[#03150d]/95 backdrop-blur-md border-b border-emerald-900/40 py-3 shadow-2xl' : 'bg-transparent py-4'
     }`}>
       {/* Top Banner Notice */}
-      <div className="hidden lg:block bg-gradient-to-r from-emerald-950 via-nature-950 to-emerald-950 border-b border-emerald-800/30 text-xs py-1.5 px-4 text-emerald-200/80">
+      <div className="hidden lg:block bg-gradient-to-r from-emerald-950 via-[#042014] to-emerald-950 border-b border-emerald-800/30 text-xs py-1.5 px-4 text-emerald-200/90">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Registered Charity in Canada • CRA # <strong>{ORG_INFO.charityId}</strong></span>
+            <span>{t.charityBanner} <strong>{ORG_INFO.charityId}</strong></span>
             <span className="text-emerald-500/40">•</span>
-            <span>Act: {ORG_INFO.registrationAct}</span>
+            <span>{t.actNotice}</span>
+            <span className="text-emerald-500/40">•</span>
+            <span className="text-emerald-300 font-semibold flex items-center gap-1">
+              <MapPin className="w-3 h-3 text-emerald-400" /> {t.hqNotice}
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <a 
-              href="#verification" 
-              onClick={(e) => { e.preventDefault(); onScrollTo('verification'); }}
+              href={`mailto:${ORG_INFO.contactEmail}`}
               className="hover:text-emerald-400 flex items-center gap-1 transition-colors"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Verify Status
+              <Mail className="w-3.5 h-3.5 text-emerald-400" /> {ORG_INFO.contactEmail}
             </a>
             <span className="text-emerald-500/40">|</span>
-            <span className="text-emerald-300/70">Domain: {ORG_INFO.domain}</span>
+            <button
+              onClick={onToggleLang}
+              className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 font-bold border border-emerald-700/50 transition-colors"
+              title="Switch Language / Changer de langue"
+            >
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{lang === 'en' ? 'FR (Français)' : 'EN (English)'}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -57,7 +69,7 @@ export default function Header({ onOpenDonate, onOpenVolunteer, onScrollTo }) {
                   PlantProtect
                 </span>
                 <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-900/60 text-emerald-300 border border-emerald-700/50">
-                  NPO
+                  NWT, Canada
                 </span>
               </div>
               <p className="text-[10px] text-emerald-300/70 font-medium tracking-wide max-w-[280px] sm:max-w-xs truncate hidden md:block">
@@ -72,52 +84,65 @@ export default function Header({ onOpenDonate, onOpenVolunteer, onScrollTo }) {
               onClick={() => onScrollTo('explorer')}
               className="text-slate-300 hover:text-emerald-400 transition-colors"
             >
-              Plant Database
+              {t.navDatabase}
             </button>
             <button 
               onClick={() => onScrollTo('recorder')}
               className="text-slate-300 hover:text-emerald-400 transition-colors"
             >
-              Log Observation
+              {t.navRecorder}
             </button>
             <button 
               onClick={() => onScrollTo('projects')}
               className="text-slate-300 hover:text-emerald-400 transition-colors"
             >
-              Conservation
+              {t.navConservation}
             </button>
             <button 
               onClick={() => onScrollTo('verification')}
               className="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5"
             >
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              Charity Info
+              {t.navCharityInfo}
             </button>
           </nav>
 
-          {/* Action CTAs */}
+          {/* Action CTAs & Language Switcher */}
           <div className="hidden sm:flex items-center gap-3">
             <button
-              onClick={onOpenVolunteer}
-              className="px-4 py-2 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/50 transition-all duration-200 shadow-sm hover:shadow-emerald-900/30"
+              onClick={onToggleLang}
+              className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-700/50 hover:bg-emerald-900 transition-colors flex items-center gap-1"
             >
-              Join Volunteers
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{lang.toUpperCase()}</span>
+            </button>
+            <button
+              onClick={onOpenVolunteer}
+              className="px-3.5 py-2 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/50 transition-all shadow-sm"
+            >
+              {t.btnVolunteer}
             </button>
             <button
               onClick={onOpenDonate}
-              className="px-4 py-2 rounded-lg text-xs font-bold text-[#03150d] bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 shadow-md shadow-emerald-500/20 transition-all duration-200 transform hover:-translate-y-0.5"
+              className="px-4 py-2 rounded-lg text-xs font-bold text-[#03150d] bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 shadow-md shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5"
             >
-              Support Us
+              {t.btnDonate}
             </button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
             <button
+              onClick={onToggleLang}
+              className="px-2 py-1 rounded text-xs font-bold text-emerald-300 bg-emerald-950 border border-emerald-700"
+            >
+              {lang.toUpperCase()}
+            </button>
+            <button
               onClick={onOpenDonate}
               className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#03150d] bg-emerald-400"
             >
-              Donate
+              {t.btnDonate}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -138,37 +163,42 @@ export default function Header({ onOpenDonate, onOpenVolunteer, onScrollTo }) {
               <ShieldCheck className="w-4 h-4 text-emerald-400" /> Canadian Registered NPO
             </div>
             <p className="text-[11px] text-emerald-400/80">BN: {ORG_INFO.charityId}</p>
+            <p className="text-[11px] text-slate-300 flex items-center gap-1 pt-1">
+              <Mail className="w-3 h-3 text-emerald-400" /> {ORG_INFO.contactEmail}
+            </p>
           </div>
+
           <button 
             onClick={() => { onScrollTo('explorer'); setMobileMenuOpen(false); }}
             className="block w-full text-left py-2 text-slate-200 hover:text-emerald-400 font-medium"
           >
-            Plant Observation Explorer
+            {t.navDatabase}
           </button>
           <button 
             onClick={() => { onScrollTo('recorder'); setMobileMenuOpen(false); }}
             className="block w-full text-left py-2 text-slate-200 hover:text-emerald-400 font-medium"
           >
-            Log New Observation
+            {t.navRecorder}
           </button>
           <button 
             onClick={() => { onScrollTo('projects'); setMobileMenuOpen(false); }}
             className="block w-full text-left py-2 text-slate-200 hover:text-emerald-400 font-medium"
           >
-            Conservation Projects
+            {t.navConservation}
           </button>
           <button 
             onClick={() => { onScrollTo('verification'); setMobileMenuOpen(false); }}
             className="block w-full text-left py-2 text-slate-200 hover:text-emerald-400 font-medium"
           >
-            Charity Verification & CRA Info
+            {t.navCharityInfo}
           </button>
+
           <div className="pt-2 flex flex-col gap-2">
             <button
               onClick={() => { onOpenVolunteer(); setMobileMenuOpen(false); }}
               className="w-full py-2.5 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-900/60 border border-emerald-700/50"
             >
-              Become a Volunteer Observer
+              {t.btnVolunteer}
             </button>
           </div>
         </div>

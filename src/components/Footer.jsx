@@ -1,8 +1,11 @@
 import React from 'react';
-import { Leaf, ShieldCheck, Globe, Heart, Mail, MapPin } from 'lucide-react';
+import { Leaf, ShieldCheck, Globe, Mail, MapPin } from 'lucide-react';
 import { ORG_INFO } from '../data/plantData';
+import { translations } from '../data/translations';
 
-export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
+export default function Footer({ lang, onScrollTo, onOpenDonate, onOpenVolunteer }) {
+  const t = translations[lang];
+
   return (
     <footer className="bg-[#02140b] border-t border-emerald-900/60 pt-16 pb-12 text-slate-300 relative overflow-hidden">
       
@@ -24,7 +27,7 @@ export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed max-w-md">
-              <strong className="text-emerald-300">{ORG_INFO.fullName}</strong> is dedicated to recording, observing, and conserving plant biodiversity to protect fragile ecosystems for future generations.
+              <strong className="text-emerald-300">{ORG_INFO.fullName}</strong> is dedicated to recording, observing, and conserving subarctic and boreal plant biodiversity in the Northwest Territories.
             </p>
 
             <div className="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-800/60 text-xs space-y-1">
@@ -42,22 +45,22 @@ export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
             <ul className="space-y-2 text-xs">
               <li>
                 <button onClick={() => onScrollTo('explorer')} className="hover:text-emerald-300 transition-colors">
-                  Plant Observation Database
+                  {t.navDatabase}
                 </button>
               </li>
               <li>
                 <button onClick={() => onScrollTo('recorder')} className="hover:text-emerald-300 transition-colors">
-                  Citizen Science Field Recorder
+                  {t.navRecorder}
                 </button>
               </li>
               <li>
                 <button onClick={() => onScrollTo('projects')} className="hover:text-emerald-300 transition-colors">
-                  Conservation Projects
+                  {t.navConservation}
                 </button>
               </li>
               <li>
                 <button onClick={() => onScrollTo('verification')} className="hover:text-emerald-300 transition-colors">
-                  Government Charity Registration
+                  {t.navCharityInfo}
                 </button>
               </li>
             </ul>
@@ -65,7 +68,7 @@ export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
 
           {/* Contact & Subdomain Info */}
           <div className="md:col-span-4 space-y-3">
-            <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Cloudflare Hosting & Contact</h4>
+            <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">{t.contactTitle}</h4>
             
             <div className="space-y-2 text-xs text-slate-300">
               <div className="flex items-center gap-2">
@@ -74,11 +77,11 @@ export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Contact: contact@{ORG_INFO.domain}</span>
+                <span>{t.contactEmailLabel}: <a href={`mailto:${ORG_INFO.contactEmail}`} className="text-emerald-300 font-mono hover:underline">{ORG_INFO.contactEmail}</a></span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Headquarters: Alberta, Canada</span>
+                <span>{t.hqLabel}: <strong className="text-slate-100">{ORG_INFO.headquarters}</strong></span>
               </div>
             </div>
 
@@ -87,13 +90,13 @@ export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
                 onClick={onOpenDonate}
                 className="px-4 py-2 rounded-lg text-xs font-bold text-[#03150d] bg-emerald-400 hover:bg-emerald-300 transition-colors"
               >
-                Support Charity
+                {t.btnDonate}
               </button>
               <button
                 onClick={onOpenVolunteer}
                 className="px-4 py-2 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950 border border-emerald-800 hover:bg-emerald-900 transition-colors"
               >
-                Volunteer
+                {t.btnVolunteer}
               </button>
             </div>
           </div>
@@ -102,7 +105,7 @@ export default function Footer({ onScrollTo, onOpenDonate, onOpenVolunteer }) {
 
         {/* Bottom Legal & Copyright Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>© {new Date().getFullYear()} {ORG_INFO.fullName}. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {ORG_INFO.fullName}. {t.rightsReserved}</p>
           <div className="flex items-center gap-4">
             <span className="text-[11px] font-mono text-emerald-400/80">
               Cloudflare Edge Deployed • plantprotect.npu.codes

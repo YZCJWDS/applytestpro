@@ -1,36 +1,90 @@
 import React, { useState } from 'react';
-import { Camera, MapPin, UploadCloud, CheckCircle2, Leaf, Sparkles, Send, Tag, AlertCircle } from 'lucide-react';
+import { Camera, MapPin, UploadCloud, CheckCircle2, Leaf, Sparkles, Send, Mail, RefreshCw, Info } from 'lucide-react';
+import { ORG_INFO } from '../data/plantData';
+import { translations } from '../data/translations';
 
-export default function FieldRecorder({ onAddObservation }) {
+export default function FieldRecorder({ lang, onAddObservation }) {
+  const t = translations[lang];
+
   const [formData, setFormData] = useState({
-    commonName: '',
-    scientificName: '',
+    commonName: 'Black Spruce',
+    scientificName: 'Picea mariana',
     category: 'Trees',
-    location: 'Rocky Mountain Foothills, AB',
-    coordinates: '51.0447° N, 114.0719° W',
-    healthIndex: 90,
-    phenology: 'Active Growth Phase',
-    notes: '',
-    observer: 'Citizen Science Contributor',
-    imageUrl: ''
+    location: 'Yellowknife Boreal Zone, Northwest Territories',
+    coordinates: '62.4540° N, 114.3718° W',
+    healthIndex: 94,
+    phenology: 'Active Needle & Cone Growth',
+    notes: 'Healthy subarctic specimen growing in Sphagnum muskeg. Dense needle cluster, zero sign of insect defoliation.',
+    observer: 'Subarctic Observer',
   });
 
-  const [submitted, setSubmitted] = useState(false);
   const [previewImage, setPreviewImage] = useState('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');
+  const [submitted, setSubmitted] = useState(false);
+  const [dispatchEmailUrl, setDispatchEmailUrl] = useState('');
 
-  const presetImages = [
-    'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80'
+  const nwtPresets = [
+    {
+      name: 'Black Spruce (Épinette noire)',
+      latin: 'Picea mariana',
+      cat: 'Trees',
+      img: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80'
+    },
+    {
+      name: 'Cloudberry (Plaquebière)',
+      latin: 'Rubus chamaemorus',
+      cat: 'Wildflowers & Bogs',
+      img: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80'
+    },
+    {
+      name: 'Dwarf Birch (Bouleau nain)',
+      latin: 'Betula glandulosa',
+      cat: 'Shrubs & Berries',
+      img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80'
+    },
+    {
+      name: 'Mountain Cranberry (Airelle)',
+      latin: 'Vaccinium vitis-idaea',
+      cat: 'Shrubs & Berries',
+      img: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80'
+    }
   ];
+
+  // Handle local user photo upload file FileReader
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Auto fill real NWT coordinates
+  const handleAutoGPS = () => {
+    const nwtCoords = [
+      { loc: "Yellowknife Peatlands, NT", coord: "62.4540° N, 114.3718° W" },
+      { loc: "Nahanni National Park Reserve, NT", coord: "61.2482° N, 125.8821° W" },
+      { loc: "Fort Smith Boreal Reserve, NT", coord: "60.0055° N, 111.8872° W" },
+      { loc: "Inuvik Tundra Delta, NT", coord: "68.3607° N, 133.7230° W" }
+    ];
+    const picked = nwtCoords[Math.floor(Math.random() * nwtCoords.length)];
+    setFormData(prev => ({
+      ...prev,
+      location: picked.loc,
+      coordinates: picked.coord
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.commonName || !formData.notes) return;
 
+    const obsId = `OBS-NT-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`;
+
     const newObs = {
-      id: `OBS-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+      id: obsId,
       commonName: formData.commonName,
       scientificName: formData.scientificName || 'Taxon unassigned',
       category: formData.category,
@@ -38,31 +92,35 @@ export default function FieldRecorder({ onAddObservation }) {
       location: formData.location,
       coordinates: formData.coordinates,
       observedDate: new Date().toISOString().split('T')[0],
-      observer: formData.observer || 'Citizen Observer',
+      observer: formData.observer || 'Subarctic Observer',
       healthIndex: Number(formData.healthIndex),
       phenology: formData.phenology,
       notes: formData.notes,
       image: previewImage,
-      tags: ['Field Logged', 'Citizen Science', formData.category]
+      tags: ['Field Logged', 'Northwest Territories', formData.category]
     };
 
     onAddObservation(newObs);
+
+    // Pre-format mailto link to protectlead@npu.codes
+    const emailSubject = encodeURIComponent(`[Plant Observation Submission] ${formData.commonName} (${obsId})`);
+    const emailBody = encodeURIComponent(
+      `Organization for the recording, observation, and conservation of trees and other plants\n` +
+      `Official Log Submission to protectlead@npu.codes\n\n` +
+      `Observation ID: ${obsId}\n` +
+      `Species: ${formData.commonName} (${formData.scientificName})\n` +
+      `Category: ${formData.category}\n` +
+      `Location: ${formData.location} (${formData.coordinates})\n` +
+      `Observer: ${formData.observer}\n` +
+      `Health Rating: ${formData.healthIndex}%\n` +
+      `Phenology: ${formData.phenology}\n` +
+      `Notes: ${formData.notes}\n\n` +
+      `Headquarters: Northwest Territories (NT), Canada`
+    );
+
+    const mailto = `mailto:${ORG_INFO.contactEmail}?subject=${emailSubject}&body=${emailBody}`;
+    setDispatchEmailUrl(mailto);
     setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        commonName: '',
-        scientificName: '',
-        category: 'Trees',
-        location: 'Rocky Mountain Foothills, AB',
-        coordinates: '51.0447° N, 114.0719° W',
-        healthIndex: 90,
-        phenology: 'Active Growth Phase',
-        notes: '',
-        observer: 'Citizen Science Contributor',
-        imageUrl: ''
-      });
-    }, 3500);
   };
 
   return (
@@ -73,121 +131,165 @@ export default function FieldRecorder({ onAddObservation }) {
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/50 border border-emerald-700/50 text-emerald-300 text-xs font-semibold mb-3">
             <Leaf className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Citizen Science Portal (记录工坊)</span>
+            <span>{t.recorderTag}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
-            Log a Plant Observation
+            {t.recorderTitle}
           </h2>
           <p className="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Contribute to biological conservation by recording tree species, growth health, and micro-habitat states in your region. Your log is uploaded directly to our observation database.
+            {t.recorderDesc}
           </p>
         </div>
 
         {/* Recording Form Box */}
-        <div className="max-w-4xl mx-auto glass-panel rounded-3xl p-6 sm:p-10 border border-emerald-600/30 shadow-2xl relative">
+        <div className="max-w-4xl mx-auto glass-panel rounded-3xl p-6 sm:p-10 border border-emerald-600/40 shadow-2xl relative">
           
           {submitted ? (
-            <div className="py-16 text-center space-y-4 animate-fadeIn">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/50 shadow-xl shadow-emerald-950/80">
+            <div className="py-12 text-center space-y-5 animate-fadeIn">
+              <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/50 shadow-xl">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-100">Observation Recorded Successfully!</h3>
-              <p className="text-sm text-emerald-300/80 max-w-md mx-auto">
-                Thank you for contributing to the <strong>Organization for the recording, observation, and conservation of trees and other plants</strong> catalog.
+              
+              <h3 className="text-2xl font-bold text-slate-100">{t.submitSuccessTitle}</h3>
+              <p className="text-sm text-emerald-300 max-w-lg mx-auto">
+                {t.submitSuccessDesc}
               </p>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-950 text-xs font-mono text-emerald-400 border border-emerald-800">
-                Added to Botanical Observation Explorer feed
+
+              <div className="p-4 rounded-xl bg-[#03150d] border border-emerald-800 text-xs text-slate-300 max-w-md mx-auto space-y-2">
+                <p className="font-semibold text-emerald-400">Direct Email Dispatch</p>
+                <p className="text-[11px] text-slate-400">Destination: <strong className="text-slate-200">{ORG_INFO.contactEmail}</strong></p>
+                <a
+                  href={dispatchEmailUrl}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 text-[#03150d] font-bold text-xs hover:bg-emerald-400 transition-colors mt-2"
+                >
+                  <Mail className="w-4 h-4" /> Open Email Client to Confirm Delivery
+                </a>
+              </div>
+
+              <div className="pt-4">
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="px-5 py-2.5 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-950 border border-emerald-800 hover:bg-emerald-900 transition-colors"
+                >
+                  Log Another Observation
+                </button>
               </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               
+              {/* Quick Select NT Presets */}
+              <div className="p-4 rounded-2xl bg-[#03150d]/80 border border-emerald-800/50 space-y-2">
+                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
+                  Quick Select Authentic NWT Species Presets
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {nwtPresets.map((preset, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setFormData(prev => ({
+                          ...prev,
+                          commonName: preset.name,
+                          scientificName: preset.latin,
+                          category: preset.cat
+                        }));
+                        setPreviewImage(preset.img);
+                      }}
+                      className="p-2 rounded-xl bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-800/40 text-left transition-colors"
+                    >
+                      <p className="text-xs font-bold text-slate-200 truncate">{preset.name}</p>
+                      <p className="text-[10px] text-emerald-400/80 italic font-serif truncate">{preset.latin}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 {/* Species Common Name */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
-                    <span>Plant / Tree Name <span className="text-rose-400">*</span></span>
-                    <span className="text-[10px] text-slate-400">e.g. Sugar Maple, Fern</span>
+                  <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                    {t.fieldPlantName} <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Enter plant common name..."
+                    placeholder="e.g. Black Spruce, Cloudberry"
                     value={formData.commonName}
                     onChange={(e) => setFormData({ ...formData, commonName: e.target.value })}
-                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
+                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400"
                   />
                 </div>
 
                 {/* Scientific Name */}
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-                    Scientific Taxonomy (Optional)
+                    {t.fieldScientific}
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Acer saccharum"
+                    placeholder="e.g. Picea mariana"
                     value={formData.scientificName}
                     onChange={(e) => setFormData({ ...formData, scientificName: e.target.value })}
-                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
+                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400"
                   />
                 </div>
-
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
                 {/* Category Selection */}
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-                    Category
+                    {t.fieldCategory}
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
+                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400"
                   >
-                    <option value="Trees">Trees (树木)</option>
-                    <option value="Wildflowers">Wildflowers (野花)</option>
-                    <option value="Ferns & Mosses">Ferns & Mosses (蕨类与苔藓)</option>
-                    <option value="Shrubs">Shrubs & Bushes (灌木)</option>
+                    <option value="Trees">Trees (Arbres)</option>
+                    <option value="Shrubs & Berries">Shrubs & Berries (Arbustes & Baies)</option>
+                    <option value="Wildflowers & Bogs">Wildflowers & Bogs (Fleurs & Tourbières)</option>
                   </select>
                 </div>
 
-                {/* Location Region */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-                    Observation Region
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
-                  />
+                {/* Location & GPS */}
+                <div className="space-y-2 md:col-span-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                      {t.fieldRegion}
+                    </label>
+                    <button
+                      type="button"
+                      onClick={handleAutoGPS}
+                      className="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+                    >
+                      <MapPin className="w-3 h-3 text-emerald-400" /> {t.btnUseGPS}
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                      className="bg-[#03150d] text-slate-100 text-xs px-3.5 py-3 rounded-xl border border-emerald-800 focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={formData.coordinates}
+                      onChange={(e) => setFormData({ ...formData, coordinates: e.target.value })}
+                      className="bg-[#03150d] text-emerald-300 font-mono text-xs px-3.5 py-3 rounded-xl border border-emerald-800 focus:outline-none"
+                    />
+                  </div>
                 </div>
-
-                {/* Observer Name */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-                    Your Name / Observer ID
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.observer}
-                    onChange={(e) => setFormData({ ...formData, observer: e.target.value })}
-                    className="w-full bg-[#03150d] text-slate-100 text-sm px-4 py-3 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
-                  />
-                </div>
-
               </div>
 
-              {/* Health Rating Slider & Phenology */}
+              {/* Health Rating Slider & Observer */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-2xl bg-[#03150d]/80 border border-emerald-800/40">
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-bold text-slate-200">
-                    <span>Estimated Plant Health Index</span>
+                    <span>{t.fieldHealthSlider}</span>
                     <span className="text-emerald-400 font-mono">{formData.healthIndex}%</span>
                   </div>
                   <input
@@ -202,70 +304,71 @@ export default function FieldRecorder({ onAddObservation }) {
 
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-                    Growth Phenology State
+                    {t.fieldObserver}
                   </label>
-                  <select
-                    value={formData.phenology}
-                    onChange={(e) => setFormData({ ...formData, phenology: e.target.value })}
+                  <input
+                    type="text"
+                    value={formData.observer}
+                    onChange={(e) => setFormData({ ...formData, observer: e.target.value })}
                     className="w-full bg-[#03150d] text-slate-100 text-xs px-3 py-2 rounded-xl border border-emerald-800 focus:outline-none"
-                  >
-                    <option value="Active Growth Phase">Active Growth Phase (旺盛生长)</option>
-                    <option value="Flowering / In Bloom">Flowering / In Bloom (开花期)</option>
-                    <option value="Fruiting / Seed Mature">Fruiting / Seed Mature (结果/种子成熟)</option>
-                    <option value="Dormant / Wintering">Dormant / Wintering (休眠期)</option>
-                  </select>
+                  />
                 </div>
               </div>
 
-              {/* Field Notes & Description */}
+              {/* Field Notes */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
-                  <span>Field Observation Notes & Habitat Details <span className="text-rose-400">*</span></span>
-                  <span className="text-[10px] text-slate-400">Describe leaves, bark, trunk size, microclimate</span>
+                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  {t.fieldNotes} <span className="text-rose-400">*</span>
                 </label>
                 <textarea
                   required
                   rows="3"
-                  placeholder="Record growth state, leaves texture, moisture levels, nearby canopy..."
+                  placeholder={t.fieldNotesPlaceholder}
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full bg-[#03150d] text-slate-100 text-sm p-4 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400 transition-colors"
+                  className="w-full bg-[#03150d] text-slate-100 text-sm p-4 rounded-xl border border-emerald-800 focus:outline-none focus:border-emerald-400"
                 ></textarea>
               </div>
 
-              {/* Specimen Photo Selection */}
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-                  Specimen Photo Selection
-                </label>
-                <div className="grid grid-cols-4 gap-3">
-                  {presetImages.map((img, i) => (
-                    <div
-                      key={i}
-                      onClick={() => setPreviewImage(img)}
-                      className={`relative h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${
-                        previewImage === img ? 'border-emerald-400 ring-2 ring-emerald-500/50 scale-105' : 'border-emerald-900 opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      <img src={img} alt="preset preview" className="w-full h-full object-cover" />
-                      {previewImage === img && (
-                        <div className="absolute inset-0 bg-emerald-500/20 flex items-center justify-center">
-                          <CheckCircle2 className="w-5 h-5 text-white" />
-                        </div>
-                      )}
-                    </div>
-                  ))}
+              {/* Real Photo Upload & Preview */}
+              <div className="space-y-3 p-4 rounded-2xl bg-[#03150d]/80 border border-emerald-800/40">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                    {t.fieldPhoto}
+                  </label>
+                  <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-900 text-emerald-300 hover:bg-emerald-800 text-xs font-semibold border border-emerald-700 transition-colors">
+                    <UploadCloud className="w-4 h-4 text-emerald-400" />
+                    <span>{t.btnUploadCustomPhoto}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                {/* Preview Box */}
+                <div className="relative h-40 rounded-xl overflow-hidden border border-emerald-700/50">
+                  <img src={previewImage} alt="Specimen Preview" className="w-full h-full object-cover" />
+                  <div className="absolute bottom-2 right-2 px-3 py-1 rounded-md bg-[#03150d]/90 text-[11px] text-emerald-300 font-mono border border-emerald-800">
+                    Active Specimen Image Selected
+                  </div>
                 </div>
               </div>
 
               {/* Submit Button */}
-              <div className="pt-4 flex justify-end">
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="text-xs text-slate-400 flex items-center gap-1">
+                  <Mail className="w-3.5 h-3.5 text-emerald-400" /> Submissions sync directly to: <strong className="text-slate-200">{ORG_INFO.contactEmail}</strong>
+                </span>
+
                 <button
                   type="submit"
-                  className="px-8 py-3.5 rounded-xl font-bold text-sm text-[#03150d] bg-gradient-to-r from-emerald-400 via-nature-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 shadow-xl shadow-emerald-500/25 transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-0.5"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-sm text-[#03150d] bg-gradient-to-r from-emerald-400 via-nature-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 shadow-xl shadow-emerald-500/25 transition-all duration-300 flex items-center justify-center gap-2 transform hover:-translate-y-0.5"
                 >
                   <Send className="w-4 h-4 fill-current" />
-                  Submit Field Log to Database
+                  {t.btnSubmitFieldLog}
                 </button>
               </div>
 
