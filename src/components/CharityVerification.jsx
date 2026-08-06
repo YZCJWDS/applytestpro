@@ -108,7 +108,7 @@ export default function CharityVerification({ lang }) {
                 </div>
               </div>
 
-              {/* View Official Certificate Popup Trigger (NO EXTERNAL REDIRECT) */}
+              {/* View Official Certificate Popup Trigger */}
               <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-emerald-800/50">
                 <div className="flex items-center gap-2 text-xs text-slate-400">
                   <Building2 className="w-4 h-4 text-emerald-400" />
@@ -131,7 +131,7 @@ export default function CharityVerification({ lang }) {
 
         </div>
 
-        {/* Certificate Modal Lightbox (No External Redirects) */}
+        {/* Certificate Modal Lightbox (Renders User-Uploaded Certificate Image) */}
         {showCertificateModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
             <div className="glass-panel max-w-3xl w-full rounded-3xl overflow-hidden border border-emerald-600/50 shadow-2xl relative max-h-[92vh] flex flex-col">
@@ -140,7 +140,7 @@ export default function CharityVerification({ lang }) {
               <div className="p-4 bg-[#03150d] border-b border-emerald-800/60 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm">
                   <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                  <span>Canada Revenue Agency • Notification of Registration Certificate</span>
+                  <span>Canada Revenue Agency • Official Notification of Registration</span>
                 </div>
                 <button
                   onClick={() => setShowCertificateModal(false)}
@@ -150,12 +150,12 @@ export default function CharityVerification({ lang }) {
                 </button>
               </div>
 
-              {/* Certificate Image View Container */}
+              {/* Exact User-Uploaded Certificate Image Container */}
               <div className="p-6 overflow-y-auto bg-slate-900 flex justify-center items-center">
-                <div className="bg-white rounded-xl shadow-2xl p-2 max-w-2xl w-full border border-slate-200">
+                <div className="bg-white rounded-xl shadow-2xl p-2 max-w-xl w-full border border-slate-200">
                   <img
-                    src="/cra-certificate.svg"
-                    alt="Canada Revenue Agency Official Registration Certificate"
+                    src="/cra-certificate.png"
+                    alt="Canada Revenue Agency Official Registration Certificate Scan"
                     className="w-full h-auto rounded"
                   />
                 </div>
