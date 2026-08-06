@@ -1,0 +1,8 @@
+name = "plantprotect"
+pages_build_output_dir = "./dist"
+
+[site]
+bucket = "./dist"
+
+# Custom Domain Configuration for Cloudflare Pages:
+# plantprotect.npu.codes
