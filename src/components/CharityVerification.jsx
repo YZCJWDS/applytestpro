@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { ShieldCheck, CheckCircle2, Copy, ExternalLink, Award, Building2, MapPin, Mail } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Copy, FileText, Award, Building2, MapPin, Mail, X } from 'lucide-react';
 import { ORG_INFO } from '../data/plantData';
 import { translations } from '../data/translations';
 
 export default function CharityVerification({ lang }) {
   const [copied, setCopied] = useState(false);
+  const [showCertificateModal, setShowCertificateModal] = useState(false);
   const t = translations[lang];
 
   const handleCopyId = () => {
@@ -107,20 +108,21 @@ export default function CharityVerification({ lang }) {
                 </div>
               </div>
 
-              {/* CRA Registry Link */}
+              {/* View Official Certificate Popup Trigger (NO EXTERNAL REDIRECT) */}
               <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-emerald-800/50">
                 <div className="flex items-center gap-2 text-xs text-slate-400">
                   <Building2 className="w-4 h-4 text-emerald-400" />
                   <span>Issuer: {ORG_INFO.issuer}</span>
                 </div>
-                <a
-                  href={`https://apps.cra-arc.gc.ca/ebci/hdbc/cgi-bin/welcome?lang=en`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
+
+                <button
+                  type="button"
+                  onClick={() => setShowCertificateModal(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-[#03150d] bg-emerald-400 hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
                 >
-                  {t.craLookup} <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                  <FileText className="w-4 h-4" />
+                  <span>{lang === 'fr' ? 'Voir le certificat d\'enregistrement officiel' : 'View Official Registration Certificate'}</span>
+                </button>
               </div>
 
             </div>
@@ -128,6 +130,51 @@ export default function CharityVerification({ lang }) {
           </div>
 
         </div>
+
+        {/* Certificate Modal Lightbox (No External Redirects) */}
+        {showCertificateModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
+            <div className="glass-panel max-w-3xl w-full rounded-3xl overflow-hidden border border-emerald-600/50 shadow-2xl relative max-h-[92vh] flex flex-col">
+              
+              {/* Modal Top Bar */}
+              <div className="p-4 bg-[#03150d] border-b border-emerald-800/60 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                  <span>Canada Revenue Agency • Notification of Registration Certificate</span>
+                </div>
+                <button
+                  onClick={() => setShowCertificateModal(false)}
+                  className="p-1.5 rounded-full bg-emerald-950 text-slate-300 hover:text-white hover:bg-emerald-900 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Certificate Image View Container */}
+              <div className="p-6 overflow-y-auto bg-slate-900 flex justify-center items-center">
+                <div className="bg-white rounded-xl shadow-2xl p-2 max-w-2xl w-full border border-slate-200">
+                  <img
+                    src="/cra-certificate.svg"
+                    alt="Canada Revenue Agency Official Registration Certificate"
+                    className="w-full h-auto rounded"
+                  />
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-4 bg-[#03150d] border-t border-emerald-800/60 flex items-center justify-between text-xs text-slate-300">
+                <span className="font-mono text-emerald-400">BN: {ORG_INFO.charityId}</span>
+                <button
+                  onClick={() => setShowCertificateModal(false)}
+                  className="px-5 py-2 rounded-xl text-xs font-bold text-[#03150d] bg-emerald-400 hover:bg-emerald-300 transition-colors"
+                >
+                  {lang === 'fr' ? 'Fermer' : 'Close Certificate View'}
+                </button>
+              </div>
+
+            </div>
+          </div>
+        )}
 
       </div>
     </section>
