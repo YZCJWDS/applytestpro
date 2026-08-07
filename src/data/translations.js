@@ -17,11 +17,11 @@ export const translations = {
     heroTitleLine1: "Observing & Protecting",
     heroTitleLine2: "Subarctic & Boreal Plants",
     heroSubtitle: "Official platform of the Organization for the recording, observation, and conservation of trees and other plants. Headquartered in the Northwest Territories (NT), Canada.",
-    pillarRecord: "1. Record (记录)",
+    pillarRecord: "1. Record",
     pillarRecordDesc: "Authentic species cataloging & GPS field notes",
-    pillarObserve: "2. Observe (观察)",
+    pillarObserve: "2. Observe",
     pillarObserveDesc: "Phenology & seasonal growth monitoring",
-    pillarConserve: "3. Conserve (保护)",
+    pillarConserve: "3. Conserve",
     pillarConserveDesc: "Boreal forest & tundra ecosystem protection",
     btnLogObs: "Log Plant Observation",
     btnBrowseDb: "Browse Botanical Database",
@@ -43,7 +43,7 @@ export const translations = {
     taxExemptBadge: "Tax-Exempt Status Active",
 
     // Observation Explorer
-    explorerTag: "Botanical Observation Database (记录 & 观察)",
+    explorerTag: "Botanical Observation Database",
     explorerTitle: "Authentic Northwest Territories Flora",
     explorerDesc: "Explore verified observation records of trees, shrubs, and peatland plants natively growing in the Northwest Territories (NT) Boreal and Tundra ecozones.",
     searchPlaceholder: "Search species name (e.g. Black Spruce, Cloudberry), taxonomy, or region...",
@@ -55,8 +55,8 @@ export const translations = {
     healthRating: "Health Index",
     observedBy: "Observer",
 
-    // Field Recorder Form (图二功能增强)
-    recorderTag: "Citizen Science Field Portal (记录工坊)",
+    // Field Recorder Form
+    recorderTag: "Citizen Science Field Portal",
     recorderTitle: "Record a Real Plant Observation",
     recorderDesc: "Contribute real field data on trees, dwarf shrubs, or wetland mosses in the Northwest Territories. Submissions generate instant field records and sync directly to protectlead@npu.codes.",
     fieldPlantName: "Plant / Tree Common Name",
@@ -76,7 +76,7 @@ export const translations = {
     submitSuccessDesc: "Your record has been published to the live database and dispatched to protectlead@npu.codes.",
 
     // Conservation Projects
-    projectsTag: "Active Initiatives (生态保护项目)",
+    projectsTag: "Active Initiatives",
     projectsTitle: "Conservation & Research Programs in NT",
     projectsDesc: "Targeted research programs focusing on old-growth spruce phenology, tundra permafrost vegetation shifts, and peatland fen preservation.",
     ctaTitle: "Support Subarctic Plant Science Today",
@@ -122,11 +122,11 @@ export const translations = {
     heroTitleLine1: "Observer et protéger",
     heroTitleLine2: "les plantes subarctiques et boréales",
     heroSubtitle: "Plateforme officielle de l'Organization for the recording, observation, and conservation of trees and other plants. Basée dans les Territoires du Nord (NT), Canada.",
-    pillarRecord: "1. Enregistrer (记录)",
+    pillarRecord: "1. Enregistrer ",
     pillarRecordDesc: "Catalogage d'espèces authentiques et notes GPS sur le terrain",
-    pillarObserve: "2. Observer (观察)",
+    pillarObserve: "2. Observer ",
     pillarObserveDesc: "Suivi phénologique et suivi de la croissance saisonnière",
-    pillarConserve: "3. Conserver (保护)",
+    pillarConserve: "3. Conserver ",
     pillarConserveDesc: "Protection des forêts boréales et des écosystèmes de toundra",
     btnLogObs: "Enregistrer une observation",
     btnBrowseDb: "Explorer la base botanique",
@@ -148,7 +148,7 @@ export const translations = {
     taxExemptBadge: "Statut d'exonération fiscale actif",
 
     // Observation Explorer
-    explorerTag: "Base de données d'observations botaniques (记录 & 观察)",
+    explorerTag: "Base de données d'observations botaniques ",
     explorerTitle: "Flore authentique des Territoires du Nord",
     explorerDesc: "Explorez des enregistrements d'observation vérifiés d'arbres, d'arbustes et de plantes de tourbière indigènes des écozones boréales et de toundra des Territoires du Nord.",
     searchPlaceholder: "Rechercher une espèce (ex. Épinette noire, Plaquebière), taxonomie ou région...",
@@ -161,7 +161,7 @@ export const translations = {
     observedBy: "Observateur",
 
     // Field Recorder Form
-    recorderTag: "Portail scientifique citoyen (记录工坊)",
+    recorderTag: "Portail scientifique citoyen",
     recorderTitle: "Enregistrer une observation botanique réelle",
     recorderDesc: "Contribuez des données réelles sur le terrain sur les arbres, arbustes nains ou mousses des zones humides des Territoires du Nord. Les envois sont directement synchronisés avec protectlead@npu.codes.",
     fieldPlantName: "Nom commun de la plante / arbre",
@@ -181,7 +181,7 @@ export const translations = {
     submitSuccessDesc: "Votre enregistrement a été publié dans la base de données en direct et transmis à protectlead@npu.codes.",
 
     // Conservation Projects
-    projectsTag: "Initiatives actives (生态保护项目)",
+    projectsTag: "Initiatives actives",
     projectsTitle: "Programmes de conservation et de recherche dans les NT",
     projectsDesc: "Programmes de recherche ciblés axés sur la phénologie des épinettes anciennes, les modifications de la végétation du pergélisol et la préservation des tourbières.",
     ctaTitle: "Soutenez la science botanique subarctique aujourd'hui",
